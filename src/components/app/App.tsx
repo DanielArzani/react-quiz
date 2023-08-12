@@ -1,11 +1,22 @@
 import React from 'react';
-import HomePage from '../../pages/HomePage';
 import styled from 'styled-components';
+
+import HomePage from '../../pages/HomePage';
+import reactLogo from '../../assets/react.svg';
+import QuestionsPage from '../../pages/QuestionsPage';
 
 function App() {
   return (
     <Wrapper>
-      <HomePage />
+      <Header>
+        <Img src={reactLogo} alt='React Logo' />
+        <H1>The React Quiz</H1>
+      </Header>
+
+      <Main>
+        <HomePage />
+        {/* <QuestionsPage /> */}
+      </Main>
     </Wrapper>
   );
 }
@@ -18,6 +29,29 @@ const Wrapper = styled.div`
   flex-direction: column;
   gap: 2rem;
 
-  padding-block-start: 3rem;
+  margin-inline: auto;
+  max-width: 654px;
   min-height: 100%;
+  padding-block-start: 3rem;
+`;
+
+const Header = styled.header`
+  display: flex;
+  align-items: center;
+  gap: 2rem;
+`;
+
+const Img = styled.img`
+  height: 140px;
+  width: 140px;
+`;
+
+const H1 = styled.h1`
+  font-family: 'Codystar';
+  font-size: 3.5rem;
+  font-weight: 700;
+`;
+
+const Main = styled.main`
+  width: 100%;
 `;

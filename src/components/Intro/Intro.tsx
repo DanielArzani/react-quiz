@@ -21,9 +21,6 @@ const Wrapper = styled.div`
   flex-direction: column;
   gap: 1rem;
 
-  font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto,
-    Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
-
   & :last-child {
     margin-top: 2rem;
     margin-inline: auto;

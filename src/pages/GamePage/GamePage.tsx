@@ -3,7 +3,10 @@ import CompletionBar from '../../components/CompletionBar';
 import RemainingQuestions from '../../components/RemainingQuestions';
 import CurrentScore from '../../components/CurrentScore';
 
-function QuestionsPage() {
+/**
+ * The game page, holds the questions themselves along with the users current status and score
+ */
+function GamePage() {
   return (
     <div>
       <CompletionBar progress={0} minMax={[0, 100]} label='Remaining Questions'>
@@ -18,4 +21,4 @@ function QuestionsPage() {
   );
 }
 
-export default QuestionsPage;
+export default GamePage;

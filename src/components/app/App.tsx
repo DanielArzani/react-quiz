@@ -3,8 +3,11 @@ import styled from 'styled-components';
 
 import HomePage from '../../pages/HomePage';
 import reactLogo from '../../assets/react.svg';
-import QuestionsPage from '../../pages/QuestionsPage';
+import QuestionsPage from '../../pages/GamePage';
 
+/**
+ * The app it self, holds all of the content within it
+ */
 function App() {
   return (
     <Wrapper>
@@ -14,8 +17,8 @@ function App() {
       </Header>
 
       <Main>
-        <HomePage />
-        {/* <QuestionsPage /> */}
+        {/* <HomePage /> */}
+        <QuestionsPage />
       </Main>
     </Wrapper>
   );

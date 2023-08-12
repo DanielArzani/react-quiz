@@ -29,7 +29,7 @@ function CompletionBar({
 }: CompletionBarProps) {
   return (
     <Wrapper>
-      <div>
+      <form>
         <label className='sr-only' htmlFor='progress-bar'>
           {label}
         </label>
@@ -40,7 +40,7 @@ function CompletionBar({
           max={minMax[1]}
           value={progress}
         ></meter>
-      </div>
+      </form>
 
       <ChildLayout>{children}</ChildLayout>
     </Wrapper>

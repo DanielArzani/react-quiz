@@ -85,19 +85,45 @@ select {
 ***************/
 
 :root {
-  --bg-primary: #343a3f;
-  --text-primary: #f0f3f5;
+  --bg-primary-200: #343a40;
+  --bg-primary-300: #495057;
+  --bg-primary-400: #353b41;
+  --text-primary-400: #f0f3f5;
 }
 
 /***************
     GENERAL 
 ***************/
+html,
+body,
+#root {
+  height: 100%;
+}
+
 body {
-  background-color: var(--bg-primary);
-  color: var(--text-primary);
+  background-color: var(--bg-primary-400);
+  color: var(--text-primary-400);
   font-family: 'Codystar', cursive;
+  font-weight: 400;
 }
 
 /*******************
     UTILITIES 
 ******************/
+.btn {
+  background-color: var(--bg-primary-300);
+  border: 2px solid var(--bg-primary-300);
+  border-radius: 100px;
+  color: inherit;
+  cursor: pointer;
+  display: block;
+  font-family: inherit;
+  font-size: 1rem;
+  padding: 0.5rem 1.2rem;
+  transition: 0.3s;
+}
+
+.btn:not([disabled]):hover {
+  background-color: var(--bg-primary-200);
+  background-color: var(--color-darkest);
+}

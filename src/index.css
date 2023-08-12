@@ -174,3 +174,9 @@ body {
   white-space: nowrap;
   border: 0;
 }
+
+.center {
+  box-sizing: content-box;
+  margin-inline: auto;
+  max-inline-size: var(--measure);
+}

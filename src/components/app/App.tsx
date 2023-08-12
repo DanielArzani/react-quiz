@@ -11,12 +11,12 @@ import QuestionsPage from '../../pages/GamePage';
 function App() {
   return (
     <Wrapper>
-      <Header>
+      <Header className=''>
         <Img src={reactLogo} alt='React Logo' />
         <H1>The React Quiz</H1>
       </Header>
 
-      <Main>
+      <Main className='center'>
         {/* <HomePage /> */}
         <QuestionsPage />
       </Main>
@@ -33,12 +33,14 @@ const Wrapper = styled.div`
   gap: 2rem;
 
   margin-inline: auto;
-  max-width: 654px;
+  /* max-width: 654px; */
   min-height: 100%;
   padding-block-start: 3rem;
 `;
 
 const Header = styled.header`
+  /* --measure: 750px; */
+
   display: flex;
   align-items: center;
   gap: 2rem;
@@ -56,5 +58,7 @@ const H1 = styled.h1`
 `;
 
 const Main = styled.main`
+  --measure: 556px;
+
   width: 100%;
 `;

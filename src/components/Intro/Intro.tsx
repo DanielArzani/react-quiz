@@ -31,6 +31,7 @@ const Wrapper = styled.div`
 const H2 = styled.h2`
   font-size: 2.5rem;
   font-weight: bold;
+  text-align: center;
 `;
 
 const P = styled.p`

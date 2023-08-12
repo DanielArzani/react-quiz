@@ -89,6 +89,9 @@ select {
   --bg-primary-300: #495057;
   --bg-primary-400: #353b41;
   --text-primary-400: #f0f3f5;
+  --gray-400: #ced4d9;
+
+  --lightBlue-400: #0d98ad;
 }
 
 /***************
@@ -112,6 +115,7 @@ body {
       BLOCKS
 ******************/
 
+/* BUTTON */
 .btn {
   background-color: var(--bg-primary-300);
   border: 2px solid var(--bg-primary-300);
@@ -128,6 +132,31 @@ body {
 .btn:not([disabled]):hover {
   background-color: var(--bg-primary-200);
   background-color: var(--color-darkest);
+}
+
+/* CUSTOM METER BAR */
+.player-status-bar {
+  /* Define the width and height of the meter */
+  width: 100%;
+  height: 20px;
+}
+
+/* Define the color for the portion of the meter representing the value */
+.player-status-bar::-webkit-meter-bar {
+  background-color: var(--gray-400);
+}
+
+.player-status-bar::-moz-meter-bar {
+  background-color: var(--gray-400);
+}
+
+/* Define the styles for different parts of the meter on various browsers */
+.player-status-bar::-webkit-meter-optimum-value {
+  background-color: var(--lightBlue-400);
+}
+
+.player-status-bar::-moz-meter-optimum-value {
+  background-color: var(--lightBlue-400);
 }
 
 /*******************

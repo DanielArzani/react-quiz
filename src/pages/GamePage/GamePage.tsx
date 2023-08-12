@@ -4,12 +4,17 @@ import RemainingQuestions from '../../components/RemainingQuestions';
 import CurrentScore from '../../components/CurrentScore';
 
 /**
- * The game page, holds the questions themselves along with the users current status and score
+ * Holds the questions themselves along with the users current status and score
  */
 function GamePage() {
   return (
     <div>
-      <CompletionBar progress={0} minMax={[0, 100]} label='Remaining Questions'>
+      <CompletionBar
+        styles='player-status-bar'
+        progress={50}
+        minMax={[0, 100]}
+        label='Remaining Questions'
+      >
         <RemainingQuestions currentQuestion={1} totalQuestions={15} />
         <CurrentScore
           calculateScoreFunction={() => 0}

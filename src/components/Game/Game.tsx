@@ -1,27 +1,30 @@
 import React from 'react';
 import styled from 'styled-components';
 import Button from '../Button';
+import { Question } from '../../types/QuestionType';
 
-function Game() {
+type GameProps = {
+  questions: Question[];
+};
+
+/**
+ * The UI for the core of quiz game itself, in other words, the list of questions and answers
+ * @param questions The list of questions and the correct answer
+ */
+function Game({ questions }: GameProps) {
   return (
     <Wrapper>
       <H2>Which is the most popular JavaScript framework?</H2>
       <QuestionList>
-        <ListItem>
-          <Button classList='btn'>Angular</Button>
-        </ListItem>
-
-        <ListItem>
-          <Button classList='btn'>React</Button>
-        </ListItem>
-
-        <ListItem>
-          <Button classList='btn'>Svelte</Button>
-        </ListItem>
-
-        <ListItem>
-          <Button classList='btn'>Vue</Button>
-        </ListItem>
+        {questions.map((q, i) => {
+          if (i < 4) {
+            return (
+              <ListItem key={i}>
+                <Button classList='btn'>{q.question}</Button>
+              </ListItem>
+            );
+          }
+        })}
       </QuestionList>
     </Wrapper>
   );

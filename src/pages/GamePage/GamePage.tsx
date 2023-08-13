@@ -5,11 +5,25 @@ import CurrentScore from '../../components/CurrentScore';
 import styled from 'styled-components';
 import Game from '../../components/Game';
 import Footer from '../../components/Footer';
+import useFetch from '../../hooks/useFetch';
+import { QuestionType } from '../../types/QuestionType';
 
 /**
  * Holds everything related to the game play and scoring of the quiz app, also fetches the data for questions
  */
 function GamePage() {
+  const { data, loading, error } = useFetch<QuestionType>(
+    '/public/data/questions.json'
+  );
+
+  if (loading) return <LoadingWrapper>Loading...</LoadingWrapper>;
+  if (error)
+    return <ErrorWrapper>An error occurred: {error.message}</ErrorWrapper>;
+
+  const gameData = data?.questions;
+
+  if (!gameData) return <LoadingWrapper>Loading...</LoadingWrapper>;
+
   return (
     <Wrapper>
       <CompletionBar
@@ -26,7 +40,7 @@ function GamePage() {
         />
       </CompletionBar>
 
-      <Game />
+      <Game questions={gameData} />
 
       <Footer />
     </Wrapper>
@@ -39,4 +53,20 @@ const Wrapper = styled.div`
   display: flex;
   flex-direction: column;
   gap: 2rem;
+`;
+
+const LoadingWrapper = styled.div`
+  font-size: 1.5rem;
+  text-align: center;
+  color: #333;
+`;
+
+const ErrorWrapper = styled.div`
+  font-size: 1rem;
+  text-align: center;
+  color: red;
+  border: 1px solid red;
+  padding: 1rem;
+  margin: 1rem;
+  background-color: #fdd;
 `;

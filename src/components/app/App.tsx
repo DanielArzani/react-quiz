@@ -17,7 +17,7 @@ function App() {
       </Header>
 
       <Main className='center'>
-        {/* <HomePage /> */}
+        <HomePage />
         <QuestionsPage />
       </Main>
     </Wrapper>
@@ -33,14 +33,11 @@ const Wrapper = styled.div`
   gap: 2rem;
 
   margin-inline: auto;
-  /* max-width: 654px; */
   min-height: 100%;
   padding-block-start: 3rem;
 `;
 
 const Header = styled.header`
-  /* --measure: 750px; */
-
   display: flex;
   align-items: center;
   gap: 2rem;

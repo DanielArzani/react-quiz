@@ -14,7 +14,7 @@ type ButtonProps = {
  */
 function Button({ children, classList, onClick }: ButtonProps) {
   return (
-    <button className={classList} onClick={() => onclick}>
+    <button className={classList} onClick={onClick}>
       {children}
     </button>
   );

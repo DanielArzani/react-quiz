@@ -1,15 +1,27 @@
-import React from 'react';
+import React, { useContext } from 'react';
+
 import styled from 'styled-components';
+
 import Button from '../Button';
 
+import { PageContext } from '../../contexts/PageContext';
+
 function Intro() {
+  const context = useContext(PageContext);
+  if (!context) {
+    throw new Error('usePage must be used within a PageProvider');
+  }
+  const { changePage } = context;
+
   return (
     <Wrapper>
       <H2>Welcome to The React Quiz!</H2>
 
       <P>15 questions to test your React mastery</P>
 
-      <Button classList='btn'>Let's Start</Button>
+      <Button onClick={() => changePage('gamepage')} classList='btn'>
+        Let's Start
+      </Button>
     </Wrapper>
   );
 }

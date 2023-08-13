@@ -5,26 +5,37 @@ import HomePage from '../../pages/HomePage';
 import reactLogo from '../../assets/react.svg';
 import GamePage from '../../pages/GamePage';
 
-type Page = 'homepage' | 'gamepage';
+import { PageType } from '../../types/PageType';
 
+import { PageContext } from '../../contexts/PageContext';
 /**
  * The app it self, holds all of the content within it
  */
 function App() {
-  const [page, setPage] = useState<Page>('homepage');
+  const [page, setPage] = useState<PageType>('homepage');
+
+  /**
+   * Changes the page of the application
+   * @param pageName The name of the page component to change to
+   */
+  function changePage(pageName: PageType) {
+    setPage(pageName);
+  }
 
   return (
-    <Wrapper>
-      <Header className=''>
-        <Img src={reactLogo} alt='React Logo' />
-        <H1>The React Quiz</H1>
-      </Header>
+    <PageContext.Provider value={{ changePage }}>
+      <Wrapper>
+        <Header className=''>
+          <Img src={reactLogo} alt='React Logo' />
+          <H1>The React Quiz</H1>
+        </Header>
 
-      <Main className='center'>
-        {page === 'homepage' && <HomePage />}
-        {page === 'gamepage' && <GamePage />}
-      </Main>
-    </Wrapper>
+        <Main className='center'>
+          {page === 'homepage' && <HomePage />}
+          {page === 'gamepage' && <GamePage />}
+        </Main>
+      </Wrapper>
+    </PageContext.Provider>
   );
 }
 

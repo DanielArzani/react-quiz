@@ -9,7 +9,7 @@ function Intro() {
 
       <P>15 questions to test your React mastery</P>
 
-      <Button className='btn'>Let's Start</Button>
+      <Button classList='btn'>Let's Start</Button>
     </Wrapper>
   );
 }

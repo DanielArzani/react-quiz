@@ -1,5 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
+import Button from '../Button';
 
 function Game() {
   return (
@@ -7,19 +8,19 @@ function Game() {
       <H2>Which is the most popular JavaScript framework?</H2>
       <QuestionList>
         <ListItem>
-          <button className='btn'>Angular</button>
+          <Button classList='btn'>Angular</Button>
         </ListItem>
 
         <ListItem>
-          <button className='btn'>React</button>
+          <Button classList='btn'>React</Button>
         </ListItem>
 
         <ListItem>
-          <button className='btn'>Svelte</button>
+          <Button classList='btn'>Svelte</Button>
         </ListItem>
 
         <ListItem>
-          <button className='btn'>Vue</button>
+          <Button classList='btn'>Vue</Button>
         </ListItem>
       </QuestionList>
     </Wrapper>

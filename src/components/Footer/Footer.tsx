@@ -1,5 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
+import Button from '../Button';
 
 function Footer() {
   return (
@@ -8,7 +9,7 @@ function Footer() {
         <span id='minutes'>05</span>:<span id='seconds'>00</span>
       </Timer>
 
-      <button className='btn'>Next</button>
+      <Button classList='btn'>Next</Button>
     </Wrapper>
   );
 }

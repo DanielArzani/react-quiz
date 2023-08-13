@@ -1,14 +1,18 @@
-import React from 'react';
+import React, { useState } from 'react';
 import styled from 'styled-components';
 
 import HomePage from '../../pages/HomePage';
 import reactLogo from '../../assets/react.svg';
-import QuestionsPage from '../../pages/GamePage';
+import GamePage from '../../pages/GamePage';
+
+type Page = 'homepage' | 'gamepage';
 
 /**
  * The app it self, holds all of the content within it
  */
 function App() {
+  const [page, setPage] = useState<Page>('homepage');
+
   return (
     <Wrapper>
       <Header className=''>
@@ -17,8 +21,8 @@ function App() {
       </Header>
 
       <Main className='center'>
-        <HomePage />
-        <QuestionsPage />
+        {page === 'homepage' && <HomePage />}
+        {page === 'gamepage' && <GamePage />}
       </Main>
     </Wrapper>
   );

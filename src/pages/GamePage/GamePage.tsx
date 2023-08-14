@@ -8,7 +8,11 @@ import Footer from '../../components/Footer';
 import useFetch from '../../hooks/useFetch';
 import { QuizDataType } from '../../types/QuizDataType';
 import { StatusTypes } from '../../types/StatusTypes';
+import Loader from '../../components/Loader';
 
+//********************
+//      STATE
+//********************
 type State = {
   questions: QuizDataType;
   status: StatusTypes;
@@ -47,7 +51,7 @@ function GamePage() {
     'http://localhost:8000/questions'
   );
 
-  // In order to update the state which cannot be updated within the render logic (else we would get an infinite loop) useEffect hooks were required since I didn't want to move the dispatch functions into the useFetch hook
+  // In order to update the state which cannot be updated within the render logic (else we would get an infinite loop) useEffect hooks were required since I didn't want to move the dispatch function into the useFetch hook
   useEffect(() => {
     if (data) dispatch({ type: 'dataReceived', payload: data });
   }, [data]);
@@ -65,7 +69,7 @@ function GamePage() {
   }
 
   if (state.questions.length === 0) {
-    return <LoadingWrapper>Loading...</LoadingWrapper>;
+    return <Loader />;
   }
 
   return (
@@ -97,12 +101,6 @@ const Wrapper = styled.div`
   display: flex;
   flex-direction: column;
   gap: 2rem;
-`;
-
-const LoadingWrapper = styled.div`
-  font-size: 1.5rem;
-  text-align: center;
-  color: white;
 `;
 
 const ErrorWrapper = styled.div`

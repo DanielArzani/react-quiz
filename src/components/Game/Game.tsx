@@ -2,7 +2,6 @@ import React, { useEffect, useReducer } from 'react';
 import styled from 'styled-components';
 import Button from '../Button';
 import { QuizDataType } from '../../types/QuizDataType';
-import { StatusTypes } from '../../types/StatusTypes';
 
 type GameProps = {
   data: QuizDataType;
@@ -10,7 +9,7 @@ type GameProps = {
 
 /**
  * The UI for the core of quiz game itself, in other words, the list of questions and answers
- * @param data The list of questions and the correct answer
+ * @param data The list of questions and their associated data
  */
 function Game({ data }: GameProps) {
   return (

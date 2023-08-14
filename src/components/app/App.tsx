@@ -9,7 +9,7 @@ import { PageType } from '../../types/PageType';
 
 import { PageContext } from '../../contexts/PageContext';
 /**
- * The app it self, holds all of the content within it
+ * A quiz app
  */
 function App() {
   const [page, setPage] = useState<PageType>('homepage');
@@ -25,7 +25,7 @@ function App() {
   return (
     <PageContext.Provider value={{ changePage }}>
       <Wrapper>
-        <Header className=''>
+        <Header>
           <Img src={reactLogo} alt='React Logo' />
           <H1>The React Quiz</H1>
         </Header>

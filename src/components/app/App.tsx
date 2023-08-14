@@ -19,21 +19,27 @@ import useFetch from '../../hooks/useFetch';
 //********************
 //      STATE
 //********************
-type State = {
+export type State = {
   questions: QuizDataType;
   status: StatusTypes;
   errorObject: Error | null;
+  index: number; // This is the question number
+  answer: number | null; // This is the users answer
 };
 
 const initialState: State = {
   questions: [] as QuizDataType,
   status: 'loading',
   errorObject: null,
+  index: 0,
+  answer: null,
 };
 
 export type Action =
   | { type: 'dataReceived'; payload: QuizDataType }
-  | { type: 'dataFailed'; payload: Error };
+  | { type: 'dataFailed'; payload: Error }
+  | { type: 'startGame' }
+  | { type: 'newAnswer'; payload: number };
 
 function reducer(state: State, action: Action): State {
   switch (action.type) {
@@ -42,6 +48,12 @@ function reducer(state: State, action: Action): State {
 
     case 'dataFailed':
       return { ...state, status: 'error', errorObject: action.payload };
+
+    case 'startGame':
+      return { ...state, status: 'active' };
+
+    case 'newAnswer':
+      return { ...state, answer: action.payload };
 
     default:
       return state;
@@ -76,10 +88,13 @@ function App() {
     setPage(pageName);
   }
 
+  // Data that is shared throughout the app, only the dispatch function to set the state is passed down through props
   const quizDataContext = {
     questions: state.questions,
     status: state.status,
     errorObject: state.errorObject,
+    index: state.index,
+    answer: state.answer,
   };
 
   return (
@@ -98,8 +113,10 @@ function App() {
               </ErrorWrapper>
             )}
             {state.status === 'loading' && <Loader />}
-            {state.status === 'ready' && page === 'homepage' && <HomePage />}
-            {state.status === 'ready' && page === 'gamepage' && <GamePage />}
+            {state.status === 'ready' && page === 'homepage' && (
+              <HomePage dispatch={dispatch} />
+            )}
+            {state.status === 'active' && page === 'gamepage' && <GamePage />}
           </Main>
         </Wrapper>
       </PageContext.Provider>

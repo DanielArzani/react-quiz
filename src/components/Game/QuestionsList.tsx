@@ -1,33 +1,33 @@
 import React, { useEffect, useReducer } from 'react';
 import styled from 'styled-components';
 import Button from '../Button';
-import { QuizDataType } from '../../types/QuizDataType';
 
-type QuestionsListProps = {
-  data: QuizDataType;
-};
+import { useQuizData } from '../../contexts/QuizDataContext';
+
+type QuestionsListProps = {};
 
 /**
- * Displays the list of questions and answers
- * @param data The list of questions and their associated data
+ * Displays the list of questions and answers, one question at a time
  */
-function QuestionsList({ data }: QuestionsListProps) {
+function QuestionsList({}: QuestionsListProps) {
+  const { questions, index } = useQuizData();
+
+  const q = questions[index];
+
   return (
     <Wrapper>
-      {data.map((d, i) => {
-        return (
-          <div key={i}>
-            <H2>{d.question}</H2>
-            <QuestionList>
-              <ListItem>
-                <Button onClick={() => {}} classList='btn'>
-                  {'Quiz Question'}
-                </Button>
-              </ListItem>
-            </QuestionList>
-          </div>
-        );
-      })}
+      <H2>{q.question}</H2>
+      <QuestionList>
+        {q.options.map((choices, i) => {
+          return (
+            <ListItem key={choices}>
+              <Button onClick={() => {}} classList='btn'>
+                {choices}
+              </Button>
+            </ListItem>
+          );
+        })}
+      </QuestionList>
     </Wrapper>
   );
 }

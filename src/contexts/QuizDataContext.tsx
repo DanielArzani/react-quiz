@@ -1,12 +1,7 @@
 import React, { createContext, useContext, ReactNode } from 'react';
-import { QuizDataType } from '../types/QuizDataType';
-import { StatusTypes } from '../types/StatusTypes';
+import { State } from '../components/app/App';
 
-export type QuizDataContextType = {
-  questions: QuizDataType;
-  status: StatusTypes;
-  errorObject: Error | null;
-};
+export type QuizDataContextType = State;
 
 const QuizDataContext = createContext<QuizDataContextType | undefined>(
   undefined

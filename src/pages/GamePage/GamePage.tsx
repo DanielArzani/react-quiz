@@ -1,14 +1,10 @@
-import React, { useEffect, useReducer } from 'react';
+import React from 'react';
 import CompletionBar from '../../components/CompletionBar';
 import RemainingQuestions from '../../components/RemainingQuestions';
 import CurrentScore from '../../components/CurrentScore';
 import styled from 'styled-components';
 import Game from '../../components/Game';
 import Footer from '../../components/Footer';
-import useFetch from '../../hooks/useFetch';
-import { QuizDataType } from '../../types/QuizDataType';
-import { StatusTypes } from '../../types/StatusTypes';
-import Loader from '../../components/Loader';
 
 /**
  * Layout for the game UI, including the status bar, the questions and timer
@@ -30,7 +26,7 @@ function GamePage() {
         />
       </CompletionBar>
 
-      <Game data={[]} />
+      <Game />
 
       <Footer />
     </Wrapper>

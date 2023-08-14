@@ -7,9 +7,11 @@
     "dev": "vite --open",
     "build": "tsc && vite build",
     "preview": "vite preview",
-    "generate-docs": "npx typedoc"
+    "generate-docs": "npx typedoc",
+    "server": "json-server --watch public/data/questions.json --port 8000"
   },
   "dependencies": {
+    "json-server": "^0.17.3",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "styled-components": "^6.0.7"

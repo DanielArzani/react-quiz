@@ -1,31 +1,34 @@
-import React from 'react';
+import React, { useEffect, useReducer } from 'react';
 import styled from 'styled-components';
 import Button from '../Button';
-import { Question } from '../../types/QuestionType';
+import { QuizDataType } from '../../types/QuizDataType';
+import { StatusTypes } from '../../types/StatusTypes';
 
 type GameProps = {
-  questions: Question[];
+  data: QuizDataType;
 };
 
 /**
  * The UI for the core of quiz game itself, in other words, the list of questions and answers
- * @param questions The list of questions and the correct answer
+ * @param data The list of questions and the correct answer
  */
-function Game({ questions }: GameProps) {
+function Game({ data }: GameProps) {
   return (
     <Wrapper>
-      <H2>Which is the most popular JavaScript framework?</H2>
-      <QuestionList>
-        {questions.map((q, i) => {
-          if (i < 4) {
-            return (
-              <ListItem key={i}>
-                <Button classList='btn'>{q.question}</Button>
+      {data.map((d, i) => {
+        return (
+          <div key={i}>
+            <H2>{d.question}</H2>
+            <QuestionList>
+              <ListItem>
+                <Button onClick={() => {}} classList='btn'>
+                  {'Quiz Question'}
+                </Button>
               </ListItem>
-            );
-          }
-        })}
-      </QuestionList>
+            </QuestionList>
+          </div>
+        );
+      })}
     </Wrapper>
   );
 }

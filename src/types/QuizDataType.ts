@@ -1,10 +1,8 @@
-export type Question = {
+type Question = {
   question: string;
   options: string[];
   correctOption: number;
   points: number;
 };
 
-export type QuestionType = {
-  questions: Question[];
-};
+export type QuizDataType = Question[];

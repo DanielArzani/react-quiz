@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useReducer } from 'react';
 import CompletionBar from '../../components/CompletionBar';
 import RemainingQuestions from '../../components/RemainingQuestions';
 import CurrentScore from '../../components/CurrentScore';
@@ -6,23 +6,67 @@ import styled from 'styled-components';
 import Game from '../../components/Game';
 import Footer from '../../components/Footer';
 import useFetch from '../../hooks/useFetch';
-import { QuestionType } from '../../types/QuestionType';
+import { QuizDataType } from '../../types/QuizDataType';
+import { StatusTypes } from '../../types/StatusTypes';
+
+type State = {
+  questions: QuizDataType;
+  status: StatusTypes;
+  errorObject: Error | null;
+};
+
+const initialState: State = {
+  questions: [] as QuizDataType,
+  status: 'loading',
+  errorObject: null,
+};
+
+export type Action =
+  | { type: 'dataReceived'; payload: QuizDataType }
+  | { type: 'dataFailed'; payload: Error };
+
+function reducer(state: State, action: Action): State {
+  switch (action.type) {
+    case 'dataReceived':
+      return { ...state, questions: action.payload, status: 'ready' };
+
+    case 'dataFailed':
+      return { ...state, status: 'error', errorObject: action.payload };
+
+    default:
+      return state;
+  }
+}
 
 /**
  * Holds everything related to the game play and scoring of the quiz app, also fetches the data for questions
  */
 function GamePage() {
-  const { data, loading, error } = useFetch<QuestionType>(
-    '/public/data/questions.json'
+  const [state, dispatch] = useReducer(reducer, initialState);
+  const { data, error } = useFetch<QuizDataType>(
+    'http://localhost:8000/questions'
   );
 
-  if (loading) return <LoadingWrapper>Loading...</LoadingWrapper>;
-  if (error)
-    return <ErrorWrapper>An error occurred: {error.message}</ErrorWrapper>;
+  // In order to update the state which cannot be updated within the render logic (else we would get an infinite loop) useEffect hooks were required since I didn't want to move the dispatch functions into the useFetch hook
+  useEffect(() => {
+    if (data) dispatch({ type: 'dataReceived', payload: data });
+  }, [data]);
 
-  const gameData = data?.questions;
+  useEffect(() => {
+    if (error) dispatch({ type: 'dataFailed', payload: error });
+  }, [error]);
 
-  if (!gameData) return <LoadingWrapper>Loading...</LoadingWrapper>;
+  if (state.status === 'error') {
+    return (
+      <ErrorWrapper>
+        An error occurred: {state.errorObject?.message}
+      </ErrorWrapper>
+    );
+  }
+
+  if (state.questions.length === 0) {
+    return <LoadingWrapper>Loading...</LoadingWrapper>;
+  }
 
   return (
     <Wrapper>
@@ -40,7 +84,7 @@ function GamePage() {
         />
       </CompletionBar>
 
-      <Game questions={gameData} />
+      <Game data={state.questions} />
 
       <Footer />
     </Wrapper>
@@ -58,7 +102,7 @@ const Wrapper = styled.div`
 const LoadingWrapper = styled.div`
   font-size: 1.5rem;
   text-align: center;
-  color: #333;
+  color: white;
 `;
 
 const ErrorWrapper = styled.div`

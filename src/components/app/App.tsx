@@ -1,18 +1,72 @@
-import React, { useState } from 'react';
+import React, { useEffect, useReducer, useState } from 'react';
 import styled from 'styled-components';
 
-import HomePage from '../../pages/HomePage';
 import reactLogo from '../../assets/react.svg';
+
+import HomePage from '../../pages/HomePage';
 import GamePage from '../../pages/GamePage';
+import Loader from '../Loader';
 
 import { PageType } from '../../types/PageType';
+import { QuizDataType } from '../../types/QuizDataType';
+import { StatusTypes } from '../../types/StatusTypes';
 
 import { PageContext } from '../../contexts/PageContext';
+import { QuizDataProvider } from '../../contexts/QuizDataContext';
+
+import useFetch from '../../hooks/useFetch';
+
+//********************
+//      STATE
+//********************
+type State = {
+  questions: QuizDataType;
+  status: StatusTypes;
+  errorObject: Error | null;
+};
+
+const initialState: State = {
+  questions: [] as QuizDataType,
+  status: 'loading',
+  errorObject: null,
+};
+
+export type Action =
+  | { type: 'dataReceived'; payload: QuizDataType }
+  | { type: 'dataFailed'; payload: Error };
+
+function reducer(state: State, action: Action): State {
+  switch (action.type) {
+    case 'dataReceived':
+      return { ...state, questions: action.payload, status: 'ready' };
+
+    case 'dataFailed':
+      return { ...state, status: 'error', errorObject: action.payload };
+
+    default:
+      return state;
+  }
+}
+
 /**
  * A quiz app
  */
 function App() {
   const [page, setPage] = useState<PageType>('homepage');
+
+  const [state, dispatch] = useReducer(reducer, initialState);
+  const { data, error } = useFetch<QuizDataType>(
+    'http://localhost:8000/questions'
+  );
+
+  // In order to update the state which cannot be updated within the render logic (else we would get an infinite loop) useEffect hooks were required since I didn't want to move the dispatch function into the useFetch hook
+  useEffect(() => {
+    if (data) dispatch({ type: 'dataReceived', payload: data });
+  }, [data]);
+
+  useEffect(() => {
+    if (error) dispatch({ type: 'dataFailed', payload: error });
+  }, [error]);
 
   /**
    * Changes the page of the application
@@ -22,24 +76,48 @@ function App() {
     setPage(pageName);
   }
 
-  return (
-    <PageContext.Provider value={{ changePage }}>
-      <Wrapper>
-        <Header>
-          <Img src={reactLogo} alt='React Logo' />
-          <H1>The React Quiz</H1>
-        </Header>
+  const quizDataContext = {
+    questions: state.questions,
+    status: state.status,
+    errorObject: state.errorObject,
+  };
 
-        <Main className='center'>
-          {page === 'homepage' && <HomePage />}
-          {page === 'gamepage' && <GamePage />}
-        </Main>
-      </Wrapper>
-    </PageContext.Provider>
+  return (
+    <QuizDataProvider value={quizDataContext}>
+      <PageContext.Provider value={{ changePage }}>
+        <Wrapper>
+          <Header>
+            <Img src={reactLogo} alt='React Logo' />
+            <H1>The React Quiz</H1>
+          </Header>
+
+          <Main className='center'>
+            {state.status === 'error' && (
+              <ErrorWrapper>
+                An error occurred: {state.errorObject?.message}
+              </ErrorWrapper>
+            )}
+            {state.status === 'loading' && <Loader />}
+            {state.status === 'ready' && page === 'homepage' && <HomePage />}
+            {state.status === 'ready' && page === 'gamepage' && <GamePage />}
+          </Main>
+        </Wrapper>
+      </PageContext.Provider>
+    </QuizDataProvider>
   );
 }
 
 export default App;
+
+const ErrorWrapper = styled.div`
+  font-size: 1rem;
+  text-align: center;
+  color: red;
+  border: 1px solid red;
+  padding: 1rem;
+  margin: 1rem;
+  background-color: #fdd;
+`;
 
 const Wrapper = styled.div`
   display: flex;

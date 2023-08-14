@@ -5,6 +5,7 @@ import styled from 'styled-components';
 import Button from '../Button';
 
 import { PageContext } from '../../contexts/PageContext';
+import { useQuizData } from '../../contexts/QuizDataContext';
 
 function Intro() {
   const context = useContext(PageContext);
@@ -12,12 +13,13 @@ function Intro() {
     throw new Error('usePage must be used within a PageProvider');
   }
   const { changePage } = context;
+  const { questions } = useQuizData();
 
   return (
     <Wrapper>
       <H2>Welcome to The React Quiz!</H2>
 
-      <P>15 questions to test your React mastery</P>
+      <P>{questions.length} questions to test your React mastery</P>
 
       <Button onClick={() => changePage('gamepage')} classList='btn'>
         Let's Start

@@ -3,15 +3,15 @@ import styled from 'styled-components';
 import Button from '../Button';
 import { QuizDataType } from '../../types/QuizDataType';
 
-type GameProps = {
+type QuestionsListProps = {
   data: QuizDataType;
 };
 
 /**
- * The UI for the core of quiz game itself, in other words, the list of questions and answers
+ * Displays the list of questions and answers
  * @param data The list of questions and their associated data
  */
-function Game({ data }: GameProps) {
+function QuestionsList({ data }: QuestionsListProps) {
   return (
     <Wrapper>
       {data.map((d, i) => {
@@ -32,7 +32,7 @@ function Game({ data }: GameProps) {
   );
 }
 
-export default Game;
+export default QuestionsList;
 
 const Wrapper = styled.div`
   align-self: center;

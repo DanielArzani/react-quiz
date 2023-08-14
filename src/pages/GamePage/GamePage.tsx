@@ -11,7 +11,7 @@ import { StatusTypes } from '../../types/StatusTypes';
 import Loader from '../../components/Loader';
 
 /**
- * Holds everything related to the game play and scoring of the quiz app, also fetches the data for questions
+ * Layout for the game UI, including the status bar, the questions and timer
  */
 function GamePage() {
   return (

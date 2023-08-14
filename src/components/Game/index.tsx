@@ -1,2 +1,2 @@
-export * from "./Game";
-export { default } from "./Game";
+export * from './QuestionsList';
+export { default } from './QuestionsList';

@@ -1,7 +1,9 @@
 import React, { createContext, useContext, ReactNode } from 'react';
-import { State } from '../components/app/App';
+import { State, Action } from '../components/app/App';
 
-export type QuizDataContextType = State;
+export type QuizDataContextType = State & {
+  dispatch: React.Dispatch<Action>;
+};
 
 const QuizDataContext = createContext<QuizDataContextType | undefined>(
   undefined

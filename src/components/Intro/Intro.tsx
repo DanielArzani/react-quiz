@@ -7,24 +7,19 @@ import Button from '../Button';
 import { PageContext } from '../../contexts/PageContext';
 import { useQuizData } from '../../contexts/QuizDataContext';
 
-import { Action } from '../app/App';
-
-type IntroProps = {
-  dispatch: React.Dispatch<Action>;
-};
+type IntroProps = {};
 
 /**
  *
  * The starting screen, will show the welcome, the number of questions the quiz has and the button to start the game
- * @param dispatch The function to set the state
  */
-function Intro({ dispatch }: IntroProps) {
+function Intro({}: IntroProps) {
   const context = useContext(PageContext);
   if (!context) {
     throw new Error('usePage must be used within a PageProvider');
   }
   const { changePage } = context;
-  const { questions } = useQuizData();
+  const { questions, dispatch } = useQuizData();
 
   return (
     <Wrapper>

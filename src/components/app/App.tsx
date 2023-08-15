@@ -95,6 +95,7 @@ function App() {
     errorObject: state.errorObject,
     index: state.index,
     answer: state.answer,
+    dispatch: dispatch,
   };
 
   return (
@@ -113,9 +114,7 @@ function App() {
               </ErrorWrapper>
             )}
             {state.status === 'loading' && <Loader />}
-            {state.status === 'ready' && page === 'homepage' && (
-              <HomePage dispatch={dispatch} />
-            )}
+            {state.status === 'ready' && page === 'homepage' && <HomePage />}
             {state.status === 'active' && page === 'gamepage' && <GamePage />}
           </Main>
         </Wrapper>

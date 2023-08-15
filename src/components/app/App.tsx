@@ -69,7 +69,21 @@ function reducer(state: State, action: Action): State {
       };
 
     case 'nextQuestion':
-      return { ...state, index: state.index + 1, answer: null };
+      const maxNumOfQuestions = state.questions.length;
+
+      // TODO: Find out why the index only goes up to 13?
+      // console.log({ index: state.index });
+      if (state.index >= maxNumOfQuestions - 2) {
+        return {
+          ...state,
+          index: maxNumOfQuestions,
+          answer: null,
+          currentPage: 'resultsPage',
+          status: 'finished',
+        };
+      } else {
+        return { ...state, index: state.index + 1, answer: null };
+      }
 
     case 'changePage':
       return { ...state, currentPage: action.payload };

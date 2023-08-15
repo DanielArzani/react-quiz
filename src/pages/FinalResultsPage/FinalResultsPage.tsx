@@ -36,9 +36,6 @@ const Wrapper = styled.div`
 
 const FinalScore = styled.p``;
 
-const ButtonWrapper = styled.button`
+const ButtonWrapper = styled.div`
   align-self: end;
-
-  background-color: transparent;
-  border: none;
 `;

@@ -15,6 +15,7 @@ import { QuizDataProvider } from '../../contexts/QuizDataContext';
 
 import useFetch from '../../hooks/useFetch';
 import FinalResultsPage from '../../pages/FinalResultsPage';
+import useLocalStorage from '../../hooks/useLocalStorage';
 
 //********************
 //      STATE
@@ -70,14 +71,11 @@ function reducer(state: State, action: Action): State {
       };
 
     case 'nextQuestion':
-      const maxNumOfQuestions = state.questions.length;
+      const maxNumOfQuestions = state.questions.length - 1;
 
-      // TODO: Find out why the index only goes up to 13?
-      // console.log({ index: state.index });
-      if (state.index >= maxNumOfQuestions - 1) {
+      if (state.index >= maxNumOfQuestions) {
         return {
           ...state,
-          index: maxNumOfQuestions,
           answer: null,
           currentPage: 'resultsPage',
           status: 'finished',

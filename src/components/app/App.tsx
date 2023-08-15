@@ -15,6 +15,7 @@ import { PageContext } from '../../contexts/PageContext';
 import { QuizDataProvider } from '../../contexts/QuizDataContext';
 
 import useFetch from '../../hooks/useFetch';
+import FinalResultsPage from '../../pages/FinalResultsPage';
 
 //********************
 //      STATE
@@ -26,6 +27,7 @@ export type State = {
   index: number; // This is the question number
   answer: number | null; // This is the users answer
   score: number;
+  currentPage: PageType;
 };
 
 const initialState: State = {
@@ -35,6 +37,7 @@ const initialState: State = {
   index: 0,
   answer: null,
   score: 0,
+  currentPage: 'homepage',
 };
 
 export type Action =
@@ -45,7 +48,8 @@ export type Action =
       type: 'newAnswer';
       payload: { chosenAnswer: number; addToScore: number };
     }
-  | { type: 'nextQuestion' };
+  | { type: 'nextQuestion' }
+  | { type: 'changePage'; payload: PageType };
 
 function reducer(state: State, action: Action): State {
   switch (action.type) {
@@ -68,6 +72,9 @@ function reducer(state: State, action: Action): State {
     case 'nextQuestion':
       return { ...state, index: state.index + 1, answer: null };
 
+    case 'changePage':
+      return { ...state, currentPage: action.payload };
+
     default:
       return state;
   }
@@ -77,8 +84,6 @@ function reducer(state: State, action: Action): State {
  * A quiz app
  */
 function App() {
-  const [page, setPage] = useState<PageType>('homepage');
-
   const [state, dispatch] = useReducer(reducer, initialState);
   const { data, error } = useFetch<QuizDataType>(
     'http://localhost:8000/questions'
@@ -93,14 +98,6 @@ function App() {
     if (error) dispatch({ type: 'dataFailed', payload: error });
   }, [error]);
 
-  /**
-   * Changes the page of the application
-   * @param pageName The name of the page component to change to
-   */
-  function changePage(pageName: PageType) {
-    setPage(pageName);
-  }
-
   // Data that is shared throughout the app, only the dispatch function to set the state is passed down through props
   const quizDataContext = {
     questions: state.questions,
@@ -110,29 +107,35 @@ function App() {
     answer: state.answer,
     dispatch: dispatch,
     score: state.score,
+    currentPage: state.currentPage,
   };
 
   return (
     <QuizDataProvider value={quizDataContext}>
-      <PageContext.Provider value={{ changePage }}>
-        <Wrapper>
-          <Header>
-            <Img src={reactLogo} alt='React Logo' />
-            <H1>The React Quiz</H1>
-          </Header>
+      <Wrapper>
+        <Header>
+          <Img src={reactLogo} alt='React Logo' />
+          <H1>The React Quiz</H1>
+        </Header>
 
-          <Main className='center'>
-            {state.status === 'error' && (
-              <ErrorWrapper>
-                An error occurred: {state.errorObject?.message}
-              </ErrorWrapper>
-            )}
-            {state.status === 'loading' && <Loader />}
-            {state.status === 'ready' && page === 'homepage' && <HomePage />}
-            {state.status === 'active' && page === 'gamepage' && <GamePage />}
-          </Main>
-        </Wrapper>
-      </PageContext.Provider>
+        <Main className='center'>
+          {state.status === 'error' && (
+            <ErrorWrapper>
+              An error occurred: {state.errorObject?.message}
+            </ErrorWrapper>
+          )}
+          {state.status === 'loading' && <Loader />}
+          {state.status === 'ready' && state.currentPage === 'homepage' && (
+            <HomePage />
+          )}
+          {state.status === 'active' && state.currentPage === 'gamepage' && (
+            <GamePage />
+          )}
+          {/* TODO: Add the page to the state and change gamepage to resultPage */}
+          {state.status === 'finished' &&
+            state.currentPage === 'resultsPage' && <FinalResultsPage />}
+        </Main>
+      </Wrapper>
     </QuizDataProvider>
   );
 }

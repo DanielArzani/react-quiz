@@ -14,11 +14,6 @@ type IntroProps = {};
  * The starting screen, will show the welcome, the number of questions the quiz has and the button to start the game
  */
 function Intro({}: IntroProps) {
-  const context = useContext(PageContext);
-  if (!context) {
-    throw new Error('usePage must be used within a PageProvider');
-  }
-  const { changePage } = context;
   const { questions, dispatch } = useQuizData();
 
   return (
@@ -30,7 +25,7 @@ function Intro({}: IntroProps) {
       <Button
         onClick={() => {
           dispatch({ type: 'startGame' });
-          changePage('gamepage');
+          dispatch({ type: 'changePage', payload: 'gamepage' });
         }}
         classList='btn'
       >

@@ -1,1 +1,1 @@
-export type PageType = 'homepage' | 'gamepage';
+export type PageType = 'homepage' | 'gamepage' | 'resultsPage';

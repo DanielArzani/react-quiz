@@ -7,6 +7,7 @@ import Footer from '../../components/Footer';
 import { useQuizData } from '../../contexts/QuizDataContext';
 import QuestionList from '../../components/QuestionList';
 import { Question } from '../../types/QuizDataType';
+import { getMaxPossibleScore } from '../../utils/getMaxScore';
 
 /**
  * Will take in the current score and the number of points that the user has gotten and adds them together and returns the sum
@@ -29,12 +30,12 @@ function calculateScore(currentScore: number, newPoints: number): number {
 function GamePage() {
   const { score, index, questions } = useQuizData();
 
-  const maxPossibleScore: number = questions.reduce(
-    (acc: number, currQuestion: Question): number => {
-      return acc + currQuestion.points;
-    },
-    0
-  );
+  // const maxPossibleScore: number = questions.reduce(
+  //   (acc: number, currQuestion: Question): number => {
+  //     return acc + currQuestion.points;
+  //   },
+  //   0
+  // );
 
   return (
     <Wrapper>
@@ -45,7 +46,10 @@ function GamePage() {
         label='Remaining Questions'
       >
         <RemainingQuestions currentQuestion={index + 1} totalQuestions={15} />
-        <CurrentScore score={score} minMax={[0, maxPossibleScore]} />
+        <CurrentScore
+          score={score}
+          minMax={[0, getMaxPossibleScore(questions)]}
+        />
       </CompletionBar>
 
       <QuestionList />

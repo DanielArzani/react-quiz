@@ -11,7 +11,6 @@ import { PageType } from '../../types/PageType';
 import { QuizDataType } from '../../types/QuizDataType';
 import { StatusTypes } from '../../types/StatusTypes';
 
-import { PageContext } from '../../contexts/PageContext';
 import { QuizDataProvider } from '../../contexts/QuizDataContext';
 
 import useFetch from '../../hooks/useFetch';
@@ -131,7 +130,6 @@ function App() {
           {state.status === 'active' && state.currentPage === 'gamepage' && (
             <GamePage />
           )}
-          {/* TODO: Add the page to the state and change gamepage to resultPage */}
           {state.status === 'finished' &&
             state.currentPage === 'resultsPage' && <FinalResultsPage />}
         </Main>

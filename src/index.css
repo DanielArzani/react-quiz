@@ -122,7 +122,7 @@ body {
   background-color: var(--bg-primary-300);
   border: 2px solid var(--bg-primary-300);
   border-radius: 100px;
-  color: inherit;
+  color: var(--text-primary-400);
   cursor: pointer;
   display: block;
   font-family: inherit;

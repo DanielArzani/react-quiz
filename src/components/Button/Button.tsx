@@ -1,7 +1,7 @@
 import React from 'react';
 
 type ButtonProps = {
-  classList: string;
+  classList?: string;
   children: React.ReactNode;
   onClick?: () => void;
 } & React.ButtonHTMLAttributes<HTMLButtonElement>;
@@ -14,7 +14,7 @@ type ButtonProps = {
  * @param rest Any other attributes to give to the button element
  */
 const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
-  ({ children, classList, onClick, ...rest }, ref) => {
+  ({ children, classList = '', onClick, ...rest }, ref) => {
     return (
       <button ref={ref} className={classList} onClick={onClick} {...rest}>
         {children}

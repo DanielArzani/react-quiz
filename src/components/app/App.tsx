@@ -48,7 +48,8 @@ export type Action =
       payload: { chosenAnswer: number; addToScore: number };
     }
   | { type: 'nextQuestion' }
-  | { type: 'changePage'; payload: PageType };
+  | { type: 'changePage'; payload: PageType }
+  | { type: 'restartGame' };
 
 function reducer(state: State, action: Action): State {
   switch (action.type) {
@@ -73,7 +74,7 @@ function reducer(state: State, action: Action): State {
 
       // TODO: Find out why the index only goes up to 13?
       // console.log({ index: state.index });
-      if (state.index >= maxNumOfQuestions - 2) {
+      if (state.index >= maxNumOfQuestions - 1) {
         return {
           ...state,
           index: maxNumOfQuestions,
@@ -87,6 +88,16 @@ function reducer(state: State, action: Action): State {
 
     case 'changePage':
       return { ...state, currentPage: action.payload };
+
+    case 'restartGame':
+      return {
+        ...state,
+        currentPage: 'homepage',
+        index: 0,
+        answer: null,
+        status: 'ready',
+        score: 0,
+      };
 
     default:
       return state;

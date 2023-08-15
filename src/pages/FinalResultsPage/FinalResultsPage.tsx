@@ -19,7 +19,12 @@ function FinalResultsPage() {
       </FinalScore>
 
       <ButtonWrapper>
-        <Button classList='btn'>Restart Quiz</Button>
+        <Button
+          onClick={() => dispatch({ type: 'restartGame' })}
+          classList='btn'
+        >
+          Restart Quiz
+        </Button>
       </ButtonWrapper>
     </Wrapper>
   );

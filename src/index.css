@@ -92,6 +92,7 @@ select {
   --gray-400: #ced4d9;
 
   --lightBlue-400: #0d98ad;
+  --orange-400: #ffa94d;
 }
 
 /***************
@@ -131,9 +132,41 @@ body {
 }
 
 .btn:not([disabled]):hover {
-  background-color: var(--bg-primary-200);
-  background-color: var(--color-darkest);
+  background-color: var(--bg-primary-400);
 }
+
+.btn-option:not([disabled]):hover {
+  transform: translateX(1.2rem);
+}
+
+.btn[disabled]:hover {
+  cursor: not-allowed;
+}
+
+.btn-option {
+  width: 100%;
+  text-align: left;
+}
+
+.btn-option.correct {
+  background-color: var(--lightBlue-400);
+  border: 2px solid var(--lightBlue-400);
+}
+.btn-option.wrong {
+  background-color: var(--orange-400);
+  border: 2px solid var(--orange-400);
+}
+
+.answer {
+  transform: translateX(2rem);
+}
+
+/* 
+
+
+
+
+*/
 
 /* CUSTOM METER BAR */
 .player-status-bar {
@@ -179,4 +212,17 @@ body {
   box-sizing: content-box;
   margin-inline: auto;
   max-inline-size: var(--measure);
+}
+
+.disabled {
+  cursor: not-allowed;
+}
+
+/* COLOURS */
+.bg-lightBlue-400 {
+  background-color: var(--lightBlue-400);
+}
+
+.bg-orange-400 {
+  background-color: var(--orange-400);
 }

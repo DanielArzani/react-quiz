@@ -10,9 +10,39 @@ type QuestionsListProps = {};
  * Displays the list of questions and answers, one question at a time
  */
 function QuestionsList({}: QuestionsListProps) {
-  const { questions, index } = useQuizData();
+  const { questions, index, dispatch, answer } = useQuizData();
 
   const q = questions[index];
+  const hasAnswered = answer != null;
+
+  /**
+   * Constructs and returns the class names for a button based on its index. Made to avoid the ugliness that is nested ternary operators
+   * @param optionIndex - The index of the current option/button.
+   * @return - A space-separated string of class names.
+   */
+  const getButtonClass = (optionIndex: number): string => {
+    // Start with the base class names for every button.
+    let classNames = ['btn', 'btn-option'];
+
+    // If an answer has been selected:
+    if (hasAnswered) {
+      // If the current option was the one selected by the user, add the 'answer' class.
+      if (optionIndex === answer) {
+        classNames.push('answer');
+      }
+
+      // If the current option is the correct answer, add the 'correct' class.
+      // Otherwise, add the 'wrong' class.
+      if (optionIndex === q.correctOption) {
+        classNames.push('correct');
+      } else {
+        classNames.push('wrong');
+      }
+    }
+
+    // Join the array of class names into a space-separated string.
+    return classNames.join(' ');
+  };
 
   return (
     <Wrapper>
@@ -21,7 +51,13 @@ function QuestionsList({}: QuestionsListProps) {
         {q.options.map((choices, i) => {
           return (
             <ListItem key={choices}>
-              <Button onClick={() => {}} classList='btn'>
+              <Button
+                onClick={() => {
+                  dispatch({ type: 'newAnswer', payload: i });
+                }}
+                classList={getButtonClass(i)}
+                disabled={hasAnswered}
+              >
                 {choices}
               </Button>
             </ListItem>
@@ -62,9 +98,5 @@ const ListItem = styled.li`
     text-align: start;
     transition: all 0.25s ease-in-out;
     width: 100%;
-  }
-
-  & > button:hover {
-    transform: translateX(15px);
   }
 `;

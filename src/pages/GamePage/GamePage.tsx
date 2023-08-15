@@ -5,11 +5,29 @@ import CurrentScore from '../../components/CurrentScore';
 import styled from 'styled-components';
 import Game from '../../components/Game';
 import Footer from '../../components/Footer';
+import { useQuizData } from '../../contexts/QuizDataContext';
+
+/**
+ * Will take in the current score and the number of points that the user has gotten and adds them together and returns the sum
+ * @param currentScore The current score of the user
+ * @param newPoints The points the user has recently scored
+ */
+function calculateScore(currentScore: number, newPoints: number): number {
+  let sum = 0;
+  if (isNaN(currentScore) || isNaN(newPoints)) {
+    return sum;
+  } else {
+    const sum = currentScore + newPoints;
+    return sum;
+  }
+}
 
 /**
  * Layout for the game UI, including the status bar, the questions and timer
  */
 function GamePage() {
+  const { score } = useQuizData();
+
   return (
     <Wrapper>
       <CompletionBar
@@ -19,11 +37,7 @@ function GamePage() {
         label='Remaining Questions'
       >
         <RemainingQuestions currentQuestion={1} totalQuestions={15} />
-        <CurrentScore
-          calculateScoreFunction={() => 0}
-          numberOfCorrectAnswers={0}
-          minMax={[0, 280]}
-        />
+        <CurrentScore score={score} minMax={[0, 280]} />
       </CompletionBar>
 
       <Game />

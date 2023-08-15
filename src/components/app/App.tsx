@@ -25,6 +25,7 @@ export type State = {
   errorObject: Error | null;
   index: number; // This is the question number
   answer: number | null; // This is the users answer
+  score: number;
 };
 
 const initialState: State = {
@@ -33,13 +34,17 @@ const initialState: State = {
   errorObject: null,
   index: 0,
   answer: null,
+  score: 0,
 };
 
 export type Action =
   | { type: 'dataReceived'; payload: QuizDataType }
   | { type: 'dataFailed'; payload: Error }
   | { type: 'startGame' }
-  | { type: 'newAnswer'; payload: number };
+  | {
+      type: 'newAnswer';
+      payload: { chosenAnswer: number; addToScore: number };
+    };
 
 function reducer(state: State, action: Action): State {
   switch (action.type) {
@@ -53,7 +58,11 @@ function reducer(state: State, action: Action): State {
       return { ...state, status: 'active' };
 
     case 'newAnswer':
-      return { ...state, answer: action.payload };
+      return {
+        ...state,
+        answer: action.payload.chosenAnswer,
+        score: action.payload.addToScore,
+      };
 
     default:
       return state;
@@ -96,6 +105,7 @@ function App() {
     index: state.index,
     answer: state.answer,
     dispatch: dispatch,
+    score: state.score,
   };
 
   return (

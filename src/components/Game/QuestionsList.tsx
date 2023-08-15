@@ -53,7 +53,13 @@ function QuestionsList({}: QuestionsListProps) {
             <ListItem key={choices}>
               <Button
                 onClick={() => {
-                  dispatch({ type: 'newAnswer', payload: i });
+                  dispatch({
+                    type: 'newAnswer',
+                    payload: {
+                      chosenAnswer: i,
+                      addToScore: i === q.correctOption ? q.points : 0,
+                    },
+                  });
                 }}
                 classList={getButtonClass(i)}
                 disabled={hasAnswered}

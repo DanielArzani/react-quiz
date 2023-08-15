@@ -44,7 +44,8 @@ export type Action =
   | {
       type: 'newAnswer';
       payload: { chosenAnswer: number; addToScore: number };
-    };
+    }
+  | { type: 'nextQuestion' };
 
 function reducer(state: State, action: Action): State {
   switch (action.type) {
@@ -61,8 +62,11 @@ function reducer(state: State, action: Action): State {
       return {
         ...state,
         answer: action.payload.chosenAnswer,
-        score: action.payload.addToScore,
+        score: state.score + action.payload.addToScore,
       };
+
+    case 'nextQuestion':
+      return { ...state, index: state.index + 1, answer: null };
 
     default:
       return state;

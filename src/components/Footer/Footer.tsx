@@ -1,15 +1,29 @@
 import React from 'react';
 import styled from 'styled-components';
 import Button from '../Button';
+import { useQuizData } from '../../contexts/QuizDataContext';
 
+/**
+ * The foot of the quiz game, holds the timer and the next button
+ */
 function Footer() {
+  const { answer, dispatch } = useQuizData();
+  const hasAnswered = answer != null;
+
   return (
     <Wrapper>
       <Timer role='timer' aria-label='Countdown Timer'>
         <span id='minutes'>05</span>:<span id='seconds'>00</span>
       </Timer>
 
-      <Button classList='btn'>Next</Button>
+      {hasAnswered && (
+        <Button
+          onClick={() => dispatch({ type: 'nextQuestion' })}
+          classList='btn'
+        >
+          Next
+        </Button>
+      )}
     </Wrapper>
   );
 }

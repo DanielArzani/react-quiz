@@ -3,10 +3,10 @@ import CompletionBar from '../../components/CompletionBar';
 import RemainingQuestions from '../../components/RemainingQuestions';
 import CurrentScore from '../../components/CurrentScore';
 import styled from 'styled-components';
-import Game from '../../components/QuestionList';
 import Footer from '../../components/Footer';
 import { useQuizData } from '../../contexts/QuizDataContext';
 import QuestionList from '../../components/QuestionList';
+import { Question } from '../../types/QuizDataType';
 
 /**
  * Will take in the current score and the number of points that the user has gotten and adds them together and returns the sum
@@ -27,18 +27,25 @@ function calculateScore(currentScore: number, newPoints: number): number {
  * Layout for the game UI, including the status bar, the questions and timer
  */
 function GamePage() {
-  const { score, index } = useQuizData();
+  const { score, index, questions } = useQuizData();
+
+  const maxPossibleScore: number = questions.reduce(
+    (acc: number, currQuestion: Question): number => {
+      return acc + currQuestion.points;
+    },
+    0
+  );
 
   return (
     <Wrapper>
       <CompletionBar
         styles='player-status-bar'
-        progress={score}
-        minMax={[0, 280]}
+        progress={index}
+        minMax={[1, questions.length]}
         label='Remaining Questions'
       >
         <RemainingQuestions currentQuestion={index + 1} totalQuestions={15} />
-        <CurrentScore score={score} minMax={[0, 280]} />
+        <CurrentScore score={score} minMax={[0, maxPossibleScore]} />
       </CompletionBar>
 
       <QuestionList />

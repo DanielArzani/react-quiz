@@ -1,4 +1,4 @@
-import React, { useEffect, useReducer } from 'react';
+import React, { useEffect, useReducer, useRef } from 'react';
 import styled from 'styled-components';
 import Button from '../Button';
 
@@ -11,9 +11,17 @@ type QuestionsListProps = {};
  */
 function QuestionsList({}: QuestionsListProps) {
   const { questions, index, dispatch, answer } = useQuizData();
+  const firstButtonRef = useRef<HTMLButtonElement | null>(null);
 
   const q = questions[index];
   const hasAnswered = answer != null;
+
+  // Have the first button be focused on at the start of each question
+  useEffect(() => {
+    if (firstButtonRef.current) {
+      firstButtonRef.current.focus();
+    }
+  }, [questions, index]);
 
   /**
    * Constructs and returns the class names for a button based on its index. Made to avoid the ugliness that is nested ternary operators
@@ -52,6 +60,7 @@ function QuestionsList({}: QuestionsListProps) {
           return (
             <ListItem key={choices}>
               <Button
+                ref={i === 0 ? firstButtonRef : null}
                 onClick={() => {
                   dispatch({
                     type: 'newAnswer',
@@ -77,11 +86,12 @@ function QuestionsList({}: QuestionsListProps) {
 export default QuestionsList;
 
 const Wrapper = styled.div`
-  align-self: center;
+  align-self: start;
 
   display: flex;
   flex-direction: column;
   gap: 2rem;
+  width: 100%;
 `;
 
 const H2 = styled.h2`

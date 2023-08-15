@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useRef } from 'react';
 import styled from 'styled-components';
 import Button from '../Button';
 import { useQuizData } from '../../contexts/QuizDataContext';
@@ -8,7 +8,18 @@ import { useQuizData } from '../../contexts/QuizDataContext';
  */
 function Footer() {
   const { answer, dispatch } = useQuizData();
+  const nextButtonRef = useRef<HTMLButtonElement | null>(null);
+
   const hasAnswered = answer != null;
+
+  // Have the next button be focused on when the user chooses an answer
+  useEffect(() => {
+    if (hasAnswered) {
+      if (nextButtonRef.current) {
+        nextButtonRef.current.focus();
+      }
+    }
+  }, [answer]);
 
   return (
     <Wrapper>
@@ -18,6 +29,7 @@ function Footer() {
 
       {hasAnswered && (
         <Button
+          ref={nextButtonRef}
           onClick={() => dispatch({ type: 'nextQuestion' })}
           classList='btn'
         >

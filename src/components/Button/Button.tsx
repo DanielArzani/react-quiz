@@ -13,12 +13,14 @@ type ButtonProps = {
  * @param onClick A custom event handler to call on button click
  * @param rest Any other attributes to give to the button element
  */
-function Button({ children, classList, onClick, ...rest }: ButtonProps) {
-  return (
-    <button className={classList} onClick={onClick} {...rest}>
-      {children}
-    </button>
-  );
-}
+const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
+  ({ children, classList, onClick, ...rest }, ref) => {
+    return (
+      <button ref={ref} className={classList} onClick={onClick} {...rest}>
+        {children}
+      </button>
+    );
+  }
+);
 
 export default Button;

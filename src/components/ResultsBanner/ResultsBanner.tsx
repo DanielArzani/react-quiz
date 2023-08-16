@@ -5,20 +5,21 @@ import { useQuizData } from '../../contexts/QuizDataContext';
 import { getMaxPossibleScore } from '../../utils/getMaxScore';
 import { convertScoreToPercentage } from '../../utils/convertScoreToPercentage';
 
-// let emoji;
-// if (percentage === 100) emoji = "🥇";
-// if (percentage >= 80 && percentage < 100) emoji = "🎉";
-// if (percentage >= 50 && percentage < 80) emoji = "🙃";
-// if (percentage >= 0 && percentage < 50) emoji = "🤨";
-// if (percentage === 0) emoji = "🤦‍♂️";
+const emojis = {
+  fail: '🤦‍♂️',
+  barelyPass: '🤨',
+  alright: '🙃',
+  excellent: '🎉',
+  fullScore: '🥇',
+};
 
-const listOfEmojis = [
-  { fail: '🤦‍♂️' },
-  { barelyPass: '🤨' },
-  { alright: '🙃' },
-  { excellent: '🎉' },
-  { fullScore: '🥇' },
-];
+function getEmojiForScore(percentage: number) {
+  if (percentage === 0) return emojis.fail;
+  if (percentage < 50) return emojis.barelyPass;
+  if (percentage < 80) return emojis.alright;
+  if (percentage < 100) return emojis.excellent;
+  return emojis.fullScore; // for 100%
+}
 
 function ResultsBanner() {
   const { score, questions } = useQuizData();
@@ -33,9 +34,12 @@ function ResultsBanner() {
     <Wrapper>
       <BannerStyles>
         <P>
-          You scored <span>{score}</span> out of{' '}
-          <span>{getMaxPossibleScore(questions)}</span> (
-          <span>{convertedScore}</span>%)
+          <Emoji>{getEmojiForScore(convertedScore)}</Emoji> You scored
+          <span>
+            <span>{score}</span> out of
+            <span> {getMaxPossibleScore(questions)}</span> (
+            <span>{convertedScore}</span>%)
+          </span>
         </P>
       </BannerStyles>
     </Wrapper>
@@ -56,5 +60,13 @@ const BannerStyles = styled.div`
 `;
 
 const P = styled.p`
+  display: flex;
+  align-items: center;
+  gap: 3px;
   font-weight: bold;
+`;
+
+const Emoji = styled.span`
+  font-size: 1.5rem;
+  margin-right: 0.5rem;
 `;

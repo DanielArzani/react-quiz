@@ -7,10 +7,11 @@ import { useQuizData } from '../../contexts/QuizDataContext';
  * The foot of the quiz game, holds the timer and the next button
  */
 function Footer() {
-  const { answer, dispatch } = useQuizData();
+  const { answer, dispatch, index, questions } = useQuizData();
   const nextButtonRef = useRef<HTMLButtonElement | null>(null);
 
   const hasAnswered = answer != null;
+  const maxNumOfQuestions = questions.length - 1;
 
   // Have the next button be focused on when the user chooses an answer
   useEffect(() => {
@@ -27,13 +28,23 @@ function Footer() {
         <span id='minutes'>05</span>:<span id='seconds'>00</span>
       </Timer>
 
-      {hasAnswered && (
+      {hasAnswered && index < maxNumOfQuestions && (
         <Button
           ref={nextButtonRef}
           onClick={() => dispatch({ type: 'nextQuestion' })}
           classList='btn'
         >
           Next
+        </Button>
+      )}
+
+      {index >= maxNumOfQuestions && (
+        <Button
+          ref={nextButtonRef}
+          onClick={() => dispatch({ type: 'nextQuestion' })}
+          classList='btn'
+        >
+          Finish
         </Button>
       )}
     </Wrapper>

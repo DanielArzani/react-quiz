@@ -15,7 +15,6 @@ import { QuizDataProvider } from '../../contexts/QuizDataContext';
 
 import useFetch from '../../hooks/useFetch';
 import FinalResultsPage from '../../pages/FinalResultsPage';
-import useLocalStorage from '../../hooks/useLocalStorage';
 
 //********************
 //      STATE

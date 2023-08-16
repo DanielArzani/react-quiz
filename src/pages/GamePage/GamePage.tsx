@@ -30,13 +30,6 @@ function calculateScore(currentScore: number, newPoints: number): number {
 function GamePage() {
   const { score, index, questions } = useQuizData();
 
-  // const maxPossibleScore: number = questions.reduce(
-  //   (acc: number, currQuestion: Question): number => {
-  //     return acc + currQuestion.points;
-  //   },
-  //   0
-  // );
-
   return (
     <Wrapper>
       <CompletionBar

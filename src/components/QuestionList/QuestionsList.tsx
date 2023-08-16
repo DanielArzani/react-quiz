@@ -3,7 +3,6 @@ import styled from 'styled-components';
 import Button from '../Button';
 
 import { useQuizData } from '../../contexts/QuizDataContext';
-import { Question } from '../../types/QuizDataType';
 
 type QuestionsListProps = {};
 

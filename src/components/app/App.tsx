@@ -135,7 +135,7 @@ function App() {
     if (error) dispatch({ type: 'dataFailed', payload: error });
   }, [error]);
 
-  // Data that is shared throughout the app, only the dispatch function to set the state is passed down through props
+  // Data that is shared throughout the app
   const quizDataContext = {
     questions: state.questions,
     status: state.status,

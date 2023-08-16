@@ -56,7 +56,7 @@ function QuestionsList({}: QuestionsListProps) {
   return (
     <Wrapper>
       <H2>{q.question}</H2>
-      <QuestionList>
+      <QuestionListStyles>
         {q.options.map((choices, i) => {
           return (
             <ListItem key={choices}>
@@ -79,7 +79,7 @@ function QuestionsList({}: QuestionsListProps) {
             </ListItem>
           );
         })}
-      </QuestionList>
+      </QuestionListStyles>
     </Wrapper>
   );
 }
@@ -99,7 +99,7 @@ const H2 = styled.h2`
   font-weight: bold;
 `;
 
-const QuestionList = styled.ul`
+const QuestionListStyles = styled.ul`
   display: flex;
   flex-direction: column;
   gap: 1rem;

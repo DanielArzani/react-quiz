@@ -29,6 +29,7 @@ function Footer() {
     <Wrapper>
       <Timer />
 
+      {/* display next button when they're are still questions */}
       {hasAnswered && index < maxNumOfQuestions && (
         <Button
           ref={nextButtonRef}
@@ -39,6 +40,7 @@ function Footer() {
         </Button>
       )}
 
+      {/* display finish button when they're no more questions */}
       {index >= maxNumOfQuestions && (
         <Button
           ref={nextButtonRef}

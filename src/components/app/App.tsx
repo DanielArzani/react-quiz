@@ -1,20 +1,17 @@
 import React, { useEffect, useReducer, useState } from 'react';
+
 import styled from 'styled-components';
 
-import reactLogo from '../../assets/react.svg';
-
-import HomePage from '../../pages/HomePage';
-import GamePage from '../../pages/GamePage';
-import Loader from '../Loader';
-
-import { PageType } from '../../types/PageType';
-import { QuizDataType } from '../../types/QuizDataType';
-import { StatusTypes } from '../../types/StatusTypes';
-
-import { QuizDataProvider } from '../../contexts/QuizDataContext';
-
-import useFetch from '../../hooks/useFetch';
 import FinalResultsPage from '../../pages/FinalResultsPage';
+import GamePage from '../../pages/GamePage';
+import HomePage from '../../pages/HomePage';
+import Loader from '../Loader';
+import { PageType } from '../../types/PageType';
+import { QuizDataProvider } from '../../contexts/QuizDataContext';
+import { QuizDataType } from '../../types/QuizDataType';
+import reactLogo from '../../assets/react.svg';
+import { StatusTypes } from '../../types/StatusTypes';
+import useFetch from '../../hooks/useFetch';
 
 //********************
 //      STATE
@@ -73,9 +70,6 @@ function reducer(state: State, action: Action): State {
       };
 
     case 'nextQuestion':
-      console.log(state.score);
-      console.log(state.highScore);
-
       return { ...state, index: state.index + 1, answer: null };
 
     case 'finishGame':

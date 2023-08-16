@@ -1,8 +1,7 @@
 import React from 'react';
 
-import Intro from '../../components/Intro';
-
 import { Action } from '../../components/app/App';
+import Intro from '../../components/Intro';
 
 type HomePageProps = {};
 

@@ -3,8 +3,6 @@ import React, { useContext } from 'react';
 import styled from 'styled-components';
 
 import Button from '../Button';
-
-import { PageContext } from '../../contexts/PageContext';
 import { useQuizData } from '../../contexts/QuizDataContext';
 
 type IntroProps = {};

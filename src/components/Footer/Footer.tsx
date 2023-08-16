@@ -1,5 +1,7 @@
 import React, { useEffect, useRef } from 'react';
+
 import styled from 'styled-components';
+
 import Button from '../Button';
 import { useQuizData } from '../../contexts/QuizDataContext';
 

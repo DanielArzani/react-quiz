@@ -1,7 +1,8 @@
 import React, { useEffect, useReducer, useRef } from 'react';
-import styled from 'styled-components';
-import Button from '../Button';
 
+import styled from 'styled-components';
+
+import Button from '../Button';
 import { useQuizData } from '../../contexts/QuizDataContext';
 
 type QuestionsListProps = {};

@@ -41,7 +41,7 @@ function Footer() {
       {index >= maxNumOfQuestions && (
         <Button
           ref={nextButtonRef}
-          onClick={() => dispatch({ type: 'nextQuestion' })}
+          onClick={() => dispatch({ type: 'finishGame' })}
           classList='btn'
         >
           Finish

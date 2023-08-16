@@ -8,14 +8,14 @@ import { useQuizData } from '../../contexts/QuizDataContext';
  * The page which is displayed after the game is over with the final results as well as a way to restart the game
  */
 function FinalResultsPage() {
-  const { score, dispatch } = useQuizData();
+  const { score, dispatch, highScore } = useQuizData();
 
   return (
     <Wrapper>
       <ResultsBanner />
 
       <FinalScore>
-        (Highscore: <span>{score}</span> points)
+        (Highscore: <span>{highScore}</span> points)
       </FinalScore>
 
       <ButtonWrapper>

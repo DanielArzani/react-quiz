@@ -27,6 +27,7 @@ export type State = {
   answer: number | null; // This is the users answer
   score: number;
   currentPage: PageType;
+  highScore: number; // not stored in localStorage but remembered across re-renders
 };
 
 const initialState: State = {
@@ -37,6 +38,7 @@ const initialState: State = {
   answer: null,
   score: 0,
   currentPage: 'homepage',
+  highScore: 0,
 };
 
 export type Action =
@@ -49,7 +51,8 @@ export type Action =
     }
   | { type: 'nextQuestion' }
   | { type: 'changePage'; payload: PageType }
-  | { type: 'restartGame' };
+  | { type: 'restartGame' }
+  | { type: 'finishGame' };
 
 function reducer(state: State, action: Action): State {
   switch (action.type) {
@@ -70,18 +73,22 @@ function reducer(state: State, action: Action): State {
       };
 
     case 'nextQuestion':
-      const maxNumOfQuestions = state.questions.length - 1;
+      console.log(state.score);
+      console.log(state.highScore);
 
-      if (state.index >= maxNumOfQuestions) {
-        return {
-          ...state,
-          answer: null,
-          currentPage: 'resultsPage',
-          status: 'finished',
-        };
-      } else {
-        return { ...state, index: state.index + 1, answer: null };
-      }
+      return { ...state, index: state.index + 1, answer: null };
+
+    case 'finishGame':
+      const isHighScore =
+        state.score > state.highScore ? state.score : state.highScore;
+
+      return {
+        ...state,
+        answer: null,
+        currentPage: 'resultsPage',
+        status: 'finished',
+        highScore: isHighScore,
+      };
 
     case 'changePage':
       return { ...state, currentPage: action.payload };
@@ -129,6 +136,7 @@ function App() {
     dispatch: dispatch,
     score: state.score,
     currentPage: state.currentPage,
+    highScore: state.highScore,
   };
 
   return (

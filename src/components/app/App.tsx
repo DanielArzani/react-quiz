@@ -1,4 +1,4 @@
-import React, { useEffect, useReducer, useState } from 'react';
+import React, { useEffect, useReducer } from 'react';
 
 import styled from 'styled-components';
 
@@ -12,6 +12,8 @@ import { QuizDataType } from '../../types/QuizDataType';
 import reactLogo from '../../assets/react.svg';
 import { StatusTypes } from '../../types/StatusTypes';
 import useFetch from '../../hooks/useFetch';
+
+import localData from '../../../public/data/questions.json';
 
 //********************
 //      STATE
@@ -122,18 +124,24 @@ function reducer(state: State, action: Action): State {
  */
 function App() {
   const [state, dispatch] = useReducer(reducer, initialState);
-  const { data, error } = useFetch<QuizDataType>(
-    'http://localhost:8000/questions'
-  );
+  const [rerender, setRerender] = React.useState<string>('');
+  //& FOR DEVELOPMENT ONLY, USED WITH JSON-SERVER
+  // const { data, error } = useFetch<QuizDataType>(
+  //   'http://localhost:8000/questions'
+  // );
+
+  //& COMMENT OUT IN DEVELOPMENT
+  const data = localData.questions;
 
   // In order to update the state which cannot be updated within the render logic (else we would get an infinite loop) useEffect hooks were required since I didn't want to move the dispatch function into the useFetch hook
   useEffect(() => {
     if (data) dispatch({ type: 'dataReceived', payload: data });
   }, [data]);
 
-  useEffect(() => {
-    if (error) dispatch({ type: 'dataFailed', payload: error });
-  }, [error]);
+  //& UN-COMMENT IN DEVELOPMENT
+  // useEffect(() => {
+  //   if (error) dispatch({ type: 'dataFailed', payload: error });
+  // }, [error]);
 
   // Data that is shared throughout the app
   const quizDataContext = {

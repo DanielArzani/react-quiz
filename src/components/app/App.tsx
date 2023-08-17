@@ -13,7 +13,7 @@ import reactLogo from '../../assets/react.svg';
 import { StatusTypes } from '../../types/StatusTypes';
 import useFetch from '../../hooks/useFetch';
 
-import localData from '../../../public/data/questions.json';
+import localData from '../../data/questions.json';
 
 //********************
 //      STATE
